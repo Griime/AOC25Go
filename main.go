@@ -46,39 +46,28 @@ func main() {
 }
 
 func left(dial int, password int, input int) (int, int) {
-	for input > 100 {
-		input -= 100
-	}
-
-	num := dial - input
-	if num < 0 {
-		dial = 100 + num
-	} else {
-		dial = num
-	}
-
+	// Count rotations
 	if dial == 0 {
-		password++
+		password += input / 100
+	} else if input >= dial {
+		password += ((input - dial) / 100) + 1
+	}
+
+	// Dial position
+	dial = (dial - input) % 100
+	if dial < 0 {
+		dial += 100
 	}
 
 	return dial, password
 }
 
 func right(dial int, password int, input int) (int, int) {
-	for input > 100 {
-		input -= 100
-	}
+	// Count rotations
+	password += (input + dial) / 100
 
-	num := dial + input
-	if num >= 100 {
-		dial = num - 100
-	} else {
-		dial = num
-	}
-
-	if dial == 0 {
-		password++
-	}
+	// Dial position
+	dial = (dial + input) % 100
 
 	return dial, password
 }
